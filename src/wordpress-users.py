@@ -20,7 +20,7 @@ class wordpressUsers:
     x = PrettyTable()
     x.field_names = ["ID", "User", "URL"]
 
-    for userId in range(startId, endId):
+    for userId in range(int(startId), int(endId)):
       r = requests.head(url + '?author={}'.format(userId), allow_redirects=True, verify=False) 
       if debug:
         sys.stdout.write('.')
@@ -42,8 +42,8 @@ class wordpressUsers:
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description="Find Wordpress users")
   parser.add_argument('url', action='store', help="Site url, including protocol (e.g. http://)")
-  parser.add_argument('-f', '--start', action='store', default=START_ID, help="Starting ID")
-  parser.add_argument('-t', '--end', action='store', default=START_ID+DEFAULT_COUNT - 1, help="Last ID")
+  parser.add_argument('-s', '--start', action='store', default=START_ID, help="Starting ID")
+  parser.add_argument('-e', '--end', action='store', default=DEFAULT_COUNT - 1, help="Last ID")
   parser.add_argument('-d', '--debug', action='store_true', default=False, help="Print debug info")
   args = parser.parse_args()
    
@@ -54,4 +54,4 @@ if __name__ == "__main__":
     print(wu.debugPrint(args.debug, args))
 
   # Run search
-  print(wu.findUsers(args.url, args.start, args.end, args.debug))
+  print("\n{}".format(wu.findUsers(args.url, args.start, args.end, args.debug)))
